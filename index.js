@@ -314,7 +314,7 @@ app.put('/update/objet/:id', (req, res)=>{
 
     
     
-    con.query(`UPDATE objets SET objet = PS4 fat, caution = 30000, etat = Excellent, prix_jour = 5500, description = Tres bonne machine, categorie = Jeu vidéo WHERE objets.id_objet = 185`,[objet, caution, etat, prix_jour, description, categorie],(err,result)=>{
+    con.query(`UPDATE objets SET objet = ?, caution = ?, etat = ?, prix_jour = ?, description = ? WHERE objets.id_objet = ${req.params.id}`,[objet, caution, etat, prix_jour, description, categorie],(err,result)=>{
         if(err)
     {
         console.log(err)
