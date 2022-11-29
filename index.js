@@ -314,7 +314,7 @@ app.put('/update/objet/:id', (req, res)=>{
 
     
     
-    con.query(`UPDATE objets SET objet = ?, caution = ?, etat = ?, prix_jour = ?, description = ? WHERE objets.id_objet = ${req.params.id}`,[objet, caution, etat, prix_jour, description, categorie],(err,result)=>{
+    con.query(`UPDATE objets SET objet = ?, caution = ?, etat = ?, prix_jour = ?, description = ?, Categorie = ? WHERE objets.id_objet = ${req.params.id}`,[objet, caution, etat, prix_jour, description, categorie],(err,result)=>{
         if(err)
     {
         console.log(err)
