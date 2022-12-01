@@ -38,34 +38,34 @@ app.use(express.json())
 app.use(cors())
 app.use(errHandler);
 
-const con = mysql.createPool({
-    connectionLimit : 100,
-    waitForConnections : true,
-    queueLimit :0,
-    host     : 'db4free.net',
-    user     : 'yohannobiang',
-    password : '@Bolo1997',
-    database : 'obisto',
-    debug    :  true,
-    wait_timeout : 28800,
-    connect_timeout :10
-});
-app.use('/uploads', express.static('uploads'));
-app.use('/bg', express.static('bg'));
-
-
 // const con = mysql.createPool({
 //     connectionLimit : 100,
 //     waitForConnections : true,
 //     queueLimit :0,
-//     host     : 'localhost',
-//     user     : 'root',
-//     password : '',
+//     host     : 'db4free.net',
+//     user     : 'yohannobiang',
+//     password : '@Bolo1997',
 //     database : 'obisto',
 //     debug    :  true,
 //     wait_timeout : 28800,
 //     connect_timeout :10
 // });
+app.use('/uploads', express.static('uploads'));
+app.use('/bg', express.static('bg'));
+
+
+const con = mysql.createPool({
+    connectionLimit : 100,
+    waitForConnections : true,
+    queueLimit :0,
+    host     : 'localhost',
+    user     : 'root',
+    password : '',
+    database : 'obisto',
+    debug    :  true,
+    wait_timeout : 28800,
+    connect_timeout :10
+});
 
 
 
@@ -305,7 +305,7 @@ app.put('/update/objet/:id', (req, res)=>{
     const etat = req.body.etat;
     const prix_jour = req.body.prix_jour;
     const description = req.body.description;
-    const categorie = req.body.Categorie;
+    const Categorie = req.body.Categorie;
     const image1 = req.body.image1;
     const image2 = req.body.image2;
     const image3 = req.body.image3; 
@@ -314,7 +314,7 @@ app.put('/update/objet/:id', (req, res)=>{
 
     
     
-    con.query(`UPDATE objets SET objet = ?, caution = ?, etat = ?, prix_jour = ?, description = ?, Categorie = ? WHERE objets.id_objet = ${req.params.id}`,[objet, caution, etat, prix_jour, description, categorie],(err,result)=>{
+    con.query(`UPDATE objets SET objet = ?, caution = ?, etat = ?, prix_jour = ?, description = ?, Categorie = ? WHERE objets.id_objet = ${req.params.id}`,[objet, caution, etat, prix_jour, description, Categorie],(err,result)=>{
         if(err)
     {
         console.log(err)
