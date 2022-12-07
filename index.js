@@ -38,34 +38,34 @@ app.use(express.json())
 app.use(cors())
 app.use(errHandler);
 
-const con = mysql.createPool({
-    connectionLimit : 100,
-    waitForConnections : true,
-    queueLimit :0,
-    host     : 'db4free.net',
-    user     : 'yohannobiang',
-    password : '@Bolo1997',
-    database : 'obisto',
-    debug    :  true,
-    wait_timeout : 28800,
-    connect_timeout :10
-});
-app.use('/uploads', express.static('uploads'));
-app.use('/bg', express.static('bg'));
-
-
 // const con = mysql.createPool({
 //     connectionLimit : 100,
 //     waitForConnections : true,
 //     queueLimit :0,
-//     host     : 'localhost',
-//     user     : 'root',
-//     password : '',
+//     host     : 'db4free.net',
+//     user     : 'yohannobiang',
+//     password : '@Bolo1997',
 //     database : 'obisto',
 //     debug    :  true,
 //     wait_timeout : 28800,
 //     connect_timeout :10
 // });
+app.use('/uploads', express.static('uploads'));
+app.use('/bg', express.static('bg'));
+
+
+const con = mysql.createPool({
+    connectionLimit : 100,
+    waitForConnections : true,
+    queueLimit :0,
+    host     : 'localhost',
+    user     : 'root',
+    password : '',
+    database : 'obisto',
+    debug    :  true,
+    wait_timeout : 28800,
+    connect_timeout :10
+});
 
 
 
@@ -133,6 +133,16 @@ app.get('/categories/objets/:id', (req, res)=>{
 app.get('/commandes/proprietaire/:id', (req, res)=>{
     
     con.query('SELECT * FROM commandes WHERE id_proprietaire=?',[req.params.id],(err,result)=>{
+        if(err) res.status(500).send(err)
+        
+        res.status(200).json(result)
+    })
+})
+
+// Lister les commandes d'un proprietaire
+app.get('/commandes/client/:id', (req, res)=>{
+    
+    con.query('SELECT * FROM commandes WHERE id_client=?',[req.params.id],(err,result)=>{
         if(err) res.status(500).send(err)
         
         res.status(200).json(result)
@@ -262,13 +272,14 @@ app.post('/ajout/commande', (req, res)=>{
     const phone = req.body.phone;
     const quartier = req.body.quartier;
     const id_proprietaire = req.body.id_proprietaire; 
+    const id_client = req.body.id_client; 
     const date_de_commande = req.body.date_de_commande;
     const statut = req.body.statut;
     const code = req.body.code;
 
     
     
-    con.query('INSERT INTO commandes VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[id_objet, objet, date_debut, date_fin, periode, prix_total, nom_destinataire, prenom_destinataire, email, phone, quartier, id_proprietaire, date_de_commande, statut, code],(err,result)=>{
+    con.query('INSERT INTO commandes VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[id_objet, objet, date_debut, date_fin, periode, prix_total, nom_destinataire, prenom_destinataire, email, phone, quartier, id_proprietaire, id_client, date_de_commande, statut, code],(err,result)=>{
         if(err)
     {
         console.log(err)
