@@ -43,9 +43,9 @@ const con = mysql.createPool({
     waitForConnections : true,
     queueLimit :0,
     host     : 'db4free.net',
-    user     : 'yohannobiang',
+    user     : 'ebilletbd',
     password : '@Bolo1997',
-    database : 'obisto',
+    database : 'ebilletbd',
     debug    :  true,
     wait_timeout : 28800,
     connect_timeout :10
